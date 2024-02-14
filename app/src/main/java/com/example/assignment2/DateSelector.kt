@@ -17,7 +17,7 @@ import java.time.Instant
 fun DateSelector(startDialog: MutableState<Boolean>,
                     endDialog: MutableState<Boolean>,
                     setStartDateString: (String) -> Unit,
-                    setEndDateString: (String) -> Unit,) {
+                    setEndDateString: (String) -> Unit) {
     val startState = rememberDatePickerState()
     val endState = rememberDatePickerState()
 
@@ -35,7 +35,6 @@ fun DateSelector(startDialog: MutableState<Boolean>,
     var startDateMillis = startState.selectedDateMillis?.plus(43200000L)
     var endDateMills = endState.selectedDateMillis?.plus(43200000L)
 
-    // Set Values Here
     setStartDateString(simpleDateFormat.format(startDateMillis  ?: Instant.now().minusSeconds(345600).toEpochMilli()))
     setEndDateString(simpleDateFormat.format(endDateMills ?: Instant.now().toEpochMilli()))
 }

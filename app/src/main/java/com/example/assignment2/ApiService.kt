@@ -27,9 +27,10 @@ interface ApiService {
 data class ResponseItem(
     @SerializedName("url")
     val url: String,
+
     @SerializedName("title")
     val title: String,
+
     @SerializedName("date")
     val date: String
-
 )

@@ -258,39 +258,39 @@ class MainActivity : ComponentActivity() {
                     expanded = false }
             ) {
                 DropdownMenuItem(
-                    enabled = sortOption != CommonEnums.DateAsc.name,
-                    text = { Text(CommonEnums.DateAsc.name) },
+                    enabled = sortOption != CommonEnums.DateAsc.string,
+                    text = { Text(CommonEnums.DateAsc.string) },
                     onClick = {
                         response = response.sortedBy { it.date }
                         expanded = false
-                        sortOption = CommonEnums.DateAsc.name
+                        sortOption = CommonEnums.DateAsc.string
                     }
                 )
                 DropdownMenuItem(
-                    enabled = sortOption != CommonEnums.DateDesc.name,
-                    text = { Text(CommonEnums.DateDesc.name) },
+                    enabled = sortOption != CommonEnums.DateDesc.string,
+                    text = { Text(CommonEnums.DateDesc.string) },
                     onClick = {
                         response = response.sortedByDescending { it.date }
                         expanded = false
-                        sortOption = CommonEnums.DateDesc.name
+                        sortOption = CommonEnums.DateDesc.string
                     }
                 )
                 DropdownMenuItem(
-                    enabled = sortOption != CommonEnums.TitleAZ.name,
-                    text = { Text(CommonEnums.TitleAZ.name) },
+                    enabled = sortOption != CommonEnums.TitleAZ.string,
+                    text = { Text(CommonEnums.TitleAZ.string) },
                     onClick = {
                         response = response.sortedBy { it.title }
                         expanded = false
-                        sortOption = CommonEnums.TitleAZ.name
+                        sortOption = CommonEnums.TitleAZ.string
                     }
                 )
                 DropdownMenuItem(
-                    enabled = sortOption != CommonEnums.TitleZA.name,
-                    text = { Text(CommonEnums.TitleZA.name) },
+                    enabled = sortOption != CommonEnums.TitleZA.string,
+                    text = { Text(CommonEnums.TitleZA.string) },
                     onClick = {
                         response = response.sortedByDescending { it.title }
                         expanded = false
-                        sortOption = CommonEnums.TitleZA.name
+                        sortOption = CommonEnums.TitleZA.string
                     }
                 )
             }
