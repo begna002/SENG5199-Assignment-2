@@ -14,7 +14,7 @@ import java.time.Instant
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SearchContainer(startDialog: MutableState<Boolean>,
+fun DateSelector(startDialog: MutableState<Boolean>,
                     endDialog: MutableState<Boolean>,
                     setStartDateString: (String) -> Unit,
                     setEndDateString: (String) -> Unit,) {
