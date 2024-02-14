@@ -17,6 +17,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
@@ -74,7 +77,9 @@ class MainActivity : ComponentActivity() {
     @Composable
     fun Header(modifier: Modifier = Modifier) {
         Column (
-            modifier = modifier.fillMaxWidth().padding(top = 32.dp),
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(top = 32.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
@@ -100,7 +105,9 @@ class MainActivity : ComponentActivity() {
 
         DateSelector(startDialog, endDialog, setStartDateString, setEndDateString)
         Row (
-            modifier = Modifier.fillMaxWidth().padding(top = 24.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 24.dp),
             horizontalArrangement = Arrangement.Center
         ) {
             Column (horizontalAlignment = Alignment.CenterHorizontally){
@@ -156,7 +163,7 @@ class MainActivity : ComponentActivity() {
     @Composable
     fun BodyContent() {
         var routine = rememberCoroutineScope()
-        var scrollState = rememberScrollState()
+        val listState = rememberLazyListState()
 
         if (!responseFetched) {
             LaunchedEffect(key1 = Unit){
@@ -170,26 +177,29 @@ class MainActivity : ComponentActivity() {
         if (response.size > 1) {
             ListHeader()
             SortMenu()
-            Column (
-                modifier = Modifier.fillMaxWidth()
-                    .padding(top = 12.dp, start = 24.dp)
-                    .verticalScroll(scrollState)
+            LazyColumn (
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 12.dp, start = 24.dp),
+                state = listState
             )
             {
-                for (item in response) {
+                itemsIndexed(response) { index, item ->
                     LineItem(item)
                     Spacer(modifier = Modifier.height(12.dp))
                 }
             }
         } else {
             Column (
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
                     .padding(top = 200.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
             )
             {
                 CircularProgressIndicator(
-                    Modifier.size(100.dp)
+                    Modifier
+                        .size(100.dp)
                         .align(alignment = Alignment.CenterHorizontally),
                     strokeWidth = 18.dp
                 )
@@ -200,7 +210,9 @@ class MainActivity : ComponentActivity() {
     @Composable
     fun ListHeader(modifier: Modifier = Modifier) {
         Column (
-            modifier = modifier.fillMaxWidth().padding(top = 24.dp),
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(top = 24.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
@@ -225,7 +237,9 @@ class MainActivity : ComponentActivity() {
             Image(
                 painter = rememberAsyncImagePainter(response.url),
                 contentDescription = "Translated description of what the image contains",
-                modifier = Modifier.size(width = 100.dp, height = 100.dp).background(Color.Black)
+                modifier = Modifier
+                    .size(width = 100.dp, height = 100.dp)
+                    .background(Color.Black)
             )
             Text(
                 modifier = Modifier.padding(start = 8.dp),
@@ -241,7 +255,8 @@ class MainActivity : ComponentActivity() {
         var sortOption by remember { mutableStateOf("Sort By") }
 
         Column(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
                 .wrapContentSize(Alignment.Center),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
