@@ -20,8 +20,6 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
@@ -38,8 +36,11 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.paint
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -63,11 +64,17 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Column () {
+                    Column (
+                        modifier = Modifier.paint(
+                            painterResource(id = R.drawable.starry_background),
+                            contentScale = ContentScale.FillBounds)
+                    ) {
                         Header()
                         SearchContainer()
                         if (searchable) {
                             BodyContent()
+                        } else {
+                            DefaultBody()
                         }
                     }
                 }
@@ -80,12 +87,31 @@ class MainActivity : ComponentActivity() {
         Column (
             modifier = modifier
                 .fillMaxWidth()
-                .padding(top = 32.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+                .height(100.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
         ) {
             Text(
                 text = "Nasa Images",
-                fontSize = 40.sp
+                fontSize = 40.sp,
+                color = Color.White
+            )
+        }
+    }
+
+    @Composable
+    fun DefaultBody(modifier: Modifier = Modifier) {
+        Column (
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(top = 24.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = "Select date range and search!",
+                fontSize = 24.sp,
+                textAlign = TextAlign.Right,
+                color = Color.White
             )
         }
     }
@@ -108,7 +134,7 @@ class MainActivity : ComponentActivity() {
         Row (
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 24.dp),
+                .padding(top = 48.dp),
             horizontalArrangement = Arrangement.Center
         ) {
             Column (horizontalAlignment = Alignment.CenterHorizontally){
@@ -125,7 +151,8 @@ class MainActivity : ComponentActivity() {
                 }
                 Text (
                     text = startDateString,
-                    modifier = Modifier.padding(top = 8.dp)
+                    modifier = Modifier.padding(top = 8.dp),
+                    color = Color.White
                 )
             }
             Spacer(modifier = Modifier.width(32.dp))
@@ -141,7 +168,8 @@ class MainActivity : ComponentActivity() {
                 }
                 Text (
                     text = endDateString,
-                    modifier = Modifier.padding(top = 8.dp)
+                    modifier = Modifier.padding(top = 8.dp),
+                    color = Color.White
                 )
             }
             Spacer(modifier = Modifier.width(32.dp))
@@ -220,7 +248,8 @@ class MainActivity : ComponentActivity() {
             Text(
                 text = "Click image to view full size",
                 fontSize = 24.sp,
-                textAlign = TextAlign.Right
+                textAlign = TextAlign.Right,
+                color = Color.White
             )
         }
     }
@@ -247,6 +276,7 @@ class MainActivity : ComponentActivity() {
                 modifier = Modifier.padding(start = 8.dp),
                 text = imageDetails,
                 fontSize = 18.sp,
+                color = Color.White
             )
         }
     }
