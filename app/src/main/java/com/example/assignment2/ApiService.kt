@@ -1,5 +1,6 @@
 package com.example.assignment2
 
+import android.util.Log
 import androidx.compose.ui.res.stringResource
 import com.google.gson.annotations.SerializedName
 import retrofit2.Retrofit
@@ -9,15 +10,25 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 suspend fun getData(apiKey: String, startDateString: String, endDateString: String): List<ResponseItem> {
-    val url = "https://api.nasa.gov/"
-    val retrofit = Retrofit.Builder()
-        .baseUrl(url)
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
+    try {
+        val url = "https://api.nasa.gov/"
+        val retrofit = Retrofit.Builder()
+            .baseUrl(url)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
 
-    val service = retrofit.create(ApiService::class.java)
-    System.out.println("Start: $startDateString, End: $endDateString")
-    return service.getAPOD(apiKey = apiKey, startDate = startDateString, endDate = endDateString)
+        val service = retrofit.create(ApiService::class.java)
+        System.out.println("Start: $startDateString, End: $endDateString")
+        // Add Try Catch
+        return service.getAPOD(
+            apiKey = apiKey,
+            startDate = startDateString,
+            endDate = endDateString
+        )
+    } catch (ex: Exception) {
+        Log.e("Exception", "Error calling Nasa API: $ex")
+    }
+    return listOf(ResponseItem("", "", "", true))
 }
 
 interface ApiService {
@@ -35,5 +46,7 @@ data class ResponseItem(
     val title: String,
 
     @SerializedName("date")
-    val date: String
+    val date: String,
+
+    val error: Boolean
 )

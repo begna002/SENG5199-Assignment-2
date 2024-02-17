@@ -54,7 +54,7 @@ class MainActivity : ComponentActivity() {
     private var endDateString by mutableStateOf("")
     private var searchable by mutableStateOf(false)
     private var responseFetched by mutableStateOf(false)
-    private var response by mutableStateOf(listOf(ResponseItem("", "", "")))
+    private var response by mutableStateOf(listOf(ResponseItem("", "", "", false)))
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -178,7 +178,7 @@ class MainActivity : ComponentActivity() {
                 onClick = {
                     searchable = true
                     responseFetched = false
-                    response = listOf(ResponseItem("", "", ""))
+                    response = listOf(ResponseItem("", "", "", false))
                 },
                 modifier = Modifier.size(110.dp, 50.dp)
             ) {
@@ -205,7 +205,7 @@ class MainActivity : ComponentActivity() {
             responseFetched = true
         }
 
-        if (response.size > 1) {
+        if (response[0].title != "") {
             ListHeader()
             SortMenu()
             LazyColumn (
@@ -220,6 +220,8 @@ class MainActivity : ComponentActivity() {
                     Spacer(modifier = Modifier.height(12.dp))
                 }
             }
+        } else if (response[0].error) {
+            ErrorMessage()
         } else {
             Column (
                 modifier = Modifier
@@ -342,6 +344,23 @@ class MainActivity : ComponentActivity() {
                     }
                 )
             }
+        }
+    }
+
+    @Composable
+    fun ErrorMessage (modifier: Modifier = Modifier) {
+        Column (
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(top = 24.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = "Error Fetching Data",
+                fontSize = 24.sp,
+                textAlign = TextAlign.Right,
+                color = Color.White
+            )
         }
     }
 }
