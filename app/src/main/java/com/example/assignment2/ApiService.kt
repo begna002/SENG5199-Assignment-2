@@ -1,12 +1,14 @@
 package com.example.assignment2
 
+import androidx.compose.ui.res.stringResource
 import com.google.gson.annotations.SerializedName
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
-suspend fun getData(startDateString: String, endDateString: String): List<ResponseItem> {
+suspend fun getData(apiKey: String, startDateString: String, endDateString: String): List<ResponseItem> {
     val url = "https://api.nasa.gov/"
     val retrofit = Retrofit.Builder()
         .baseUrl(url)
@@ -15,12 +17,13 @@ suspend fun getData(startDateString: String, endDateString: String): List<Respon
 
     val service = retrofit.create(ApiService::class.java)
     System.out.println("Start: $startDateString, End: $endDateString")
-    return service.getAPOD(startDate = startDateString, endDate = endDateString)
+    return service.getAPOD(apiKey = apiKey, startDate = startDateString, endDate = endDateString)
 }
 
 interface ApiService {
-    @GET("planetary/apod?api_key=wWJsUYWXItBxQZLZr6kMBqeZMSYqBMaim7WtRqC0")
-    suspend fun getAPOD(@Query("start_date") startDate: String,
+    @GET("planetary/apod")
+    suspend fun getAPOD(@Query("api_key") apiKey: String,
+                        @Query("start_date") startDate: String,
                         @Query("end_date") endDate: String,): List<ResponseItem>
 }
 
