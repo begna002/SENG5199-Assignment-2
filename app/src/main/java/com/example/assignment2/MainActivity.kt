@@ -255,7 +255,7 @@ class MainActivity : ComponentActivity() {
                         .memoryCacheKey(response.url)
                         .diskCacheKey(response.url)
                         .build()),
-                contentDescription = "Translated description of what the image contains",
+                contentDescription = response.title,
                 modifier = Modifier
                     .size(width = 100.dp, height = 100.dp)
                     .background(Color.Black)
