@@ -14,3 +14,4 @@
 - Latest Images
 - Filter fetched images based on date range
 - Persisted images via Coil caching
+  - Stored in /data/data/com.example.assignment2/cache/image_cache
