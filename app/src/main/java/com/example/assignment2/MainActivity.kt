@@ -45,6 +45,7 @@ import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
@@ -72,12 +73,18 @@ class MainActivity : ComponentActivity() {
                             painterResource(id = R.drawable.starry_background),
                             contentScale = ContentScale.FillBounds)
                     ) {
-                        Header()
+                        TextBox("Nasa Images",
+                            40.sp,
+                            Modifier.fillMaxWidth().height(80.dp),
+                            Modifier.padding(top = 24.dp),)
                         SearchContainer()
                         if (searchable) {
                             BodyContent()
                         } else {
-                            DefaultBody()
+                            TextBox("Select date range and search!",
+                                24.sp,
+                                Modifier.fillMaxWidth().padding(top = 24.dp),
+                                )
                         }
                     }
                 }
@@ -86,36 +93,20 @@ class MainActivity : ComponentActivity() {
     }
 
     @Composable
-    fun Header(modifier: Modifier = Modifier) {
+    fun TextBox(text: String,
+                fontSize: TextUnit,
+                columnModifier: Modifier = Modifier,
+                textModifier:  Modifier = Modifier, ) {
         Column (
-            modifier = modifier
-                .fillMaxWidth()
-                .height(100.dp),
+            modifier = columnModifier,
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
             Text(
-                text = "Nasa Images",
-                fontSize = 40.sp,
+                text = text,
+                fontSize = fontSize,
                 color = Color.White,
-                modifier = Modifier.padding(top = 24.dp)
-            )
-        }
-    }
-
-    @Composable
-    fun DefaultBody(modifier: Modifier = Modifier) {
-        Column (
-            modifier = modifier
-                .fillMaxWidth()
-                .padding(top = 24.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text(
-                text = "Select date range and search!",
-                fontSize = 24.sp,
-                textAlign = TextAlign.Right,
-                color = Color.White
+                modifier = textModifier
             )
         }
     }
@@ -138,7 +129,7 @@ class MainActivity : ComponentActivity() {
         Row (
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 48.dp),
+                .padding(top = 24.dp),
             horizontalArrangement = Arrangement.Center
         ) {
             Column (horizontalAlignment = Alignment.CenterHorizontally){
@@ -209,7 +200,9 @@ class MainActivity : ComponentActivity() {
         }
 
         if (response[0].title != "") {
-            ListHeader()
+            TextBox("Click image to view full size",
+                24.sp,
+                Modifier.fillMaxWidth().padding(top = 24.dp, bottom = 12.dp))
             SortMenu()
             LazyColumn (
                 modifier = Modifier
@@ -224,7 +217,9 @@ class MainActivity : ComponentActivity() {
                 }
             }
         } else if (response[0].error) {
-            ErrorMessage()
+            TextBox("Error Fetching Data",
+                24.sp,
+                Modifier.fillMaxWidth().padding(top = 24.dp))
         } else {
             Column (
                 modifier = Modifier
@@ -243,22 +238,6 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    @Composable
-    fun ListHeader(modifier: Modifier = Modifier) {
-        Column (
-            modifier = modifier
-                .fillMaxWidth()
-                .padding(top = 24.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text(
-                text = "Click image to view full size",
-                fontSize = 24.sp,
-                textAlign = TextAlign.Right,
-                color = Color.White
-            )
-        }
-    }
     @Composable
     fun LineItem (response: ResponseItem) {
         val uriHandler = LocalUriHandler.current
@@ -354,23 +333,6 @@ class MainActivity : ComponentActivity() {
                     }
                 )
             }
-        }
-    }
-
-    @Composable
-    fun ErrorMessage (modifier: Modifier = Modifier) {
-        Column (
-            modifier = modifier
-                .fillMaxWidth()
-                .padding(top = 24.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text(
-                text = "Error Fetching Data",
-                fontSize = 24.sp,
-                textAlign = TextAlign.Right,
-                color = Color.White
-            )
         }
     }
 }
