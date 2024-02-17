@@ -29,6 +29,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -114,7 +115,6 @@ class MainActivity : ComponentActivity() {
         val startDialog = remember { mutableStateOf(false) }
         val endDialog = remember { mutableStateOf(false) }
 
-
         val setStartDateString: (String) -> Unit = { startString ->
             startDateString = startString
         }
@@ -124,6 +124,11 @@ class MainActivity : ComponentActivity() {
         }
 
         DateSelector(startDialog, endDialog, setStartDateString, setEndDateString)
+        ButtonSelector(startDialog, endDialog)
+    }
+
+    @Composable
+    fun ButtonSelector(startDialog: MutableState<Boolean>, endDialog: MutableState<Boolean>){
         Row (
             modifier = Modifier
                 .fillMaxWidth()
