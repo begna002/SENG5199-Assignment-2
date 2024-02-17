@@ -94,7 +94,8 @@ class MainActivity : ComponentActivity() {
             Text(
                 text = "Nasa Images",
                 fontSize = 40.sp,
-                color = Color.White
+                color = Color.White,
+                modifier = Modifier.padding(top = 24.dp)
             )
         }
     }
