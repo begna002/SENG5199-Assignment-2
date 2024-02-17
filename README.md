@@ -9,3 +9,8 @@
   - Date Descending
   - Title A-Z
   - Title Z-A
+
+## Bonuses Attempted
+- Latest Images
+- Filter fetched images based on date range
+- Persisted images via Coil caching
