@@ -53,12 +53,12 @@ fun ImageDialog(dialog: Boolean, closeDialog: () -> Unit, imageUrl: String, imag
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(500.dp),
+                    .height(450.dp),
                 shape = RoundedCornerShape(16.dp),
             ) {
                 Column(
                     modifier = Modifier
-                        .fillMaxSize(),
+                        .fillMaxSize().padding(top = 18.dp),
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
