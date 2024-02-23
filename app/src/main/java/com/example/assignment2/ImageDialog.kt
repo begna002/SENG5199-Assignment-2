@@ -76,7 +76,7 @@ fun ImageDialog(dialog: Boolean, closeDialog: () -> Unit, imageUrl: String, imag
                     )
                     Text(
                         text = imageDetails,
-                        modifier = Modifier.padding(16.dp),
+                        modifier = Modifier.padding(top = 12.dp, start = 12.dp, end = 12.dp),
                     )
                     Row(
                         modifier = Modifier
@@ -84,8 +84,7 @@ fun ImageDialog(dialog: Boolean, closeDialog: () -> Unit, imageUrl: String, imag
                         horizontalArrangement = Arrangement.Center,
                     ) {
                         TextButton(
-                            onClick = { closeDialog() },
-                            modifier = Modifier.padding(8.dp),
+                            onClick = { closeDialog() }
                         ) {
                             Text("Dismiss")
                         }
