@@ -244,6 +244,14 @@ class MainActivity : ComponentActivity() {
     @Composable
     fun LineItem (response: ResponseItem) {
         val uriHandler = LocalUriHandler.current
+        var imageUrl = response.url
+
+        // Handles case where url leads to a youtube video
+        if (response.url.contains("youtube")) {
+            val str = response.url.substringAfter("embed/")
+            val videoId = str.substringBefore("?")
+            imageUrl = "https://img.youtube.com/vi/${videoId}/1.jpg"
+        }
 
         val imageDetails = "Title: ${response.title}\n" +
                 "Date: ${response.date}"
@@ -256,9 +264,9 @@ class MainActivity : ComponentActivity() {
             Image(
                 painter = rememberAsyncImagePainter(
                     model = ImageRequest.Builder(LocalContext.current)
-                        .data(response.url)
-                        .memoryCacheKey(response.url)
-                        .diskCacheKey(response.url)
+                        .data(imageUrl)
+                        .memoryCacheKey(imageUrl)
+                        .diskCacheKey(imageUrl)
                         .build()),
                 contentDescription = response.title,
                 modifier = Modifier
