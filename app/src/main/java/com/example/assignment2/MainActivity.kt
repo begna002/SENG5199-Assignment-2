@@ -1,6 +1,7 @@
 package com.example.assignment2
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
@@ -20,6 +21,8 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
@@ -74,7 +77,9 @@ class MainActivity : ComponentActivity() {
                     ) {
                         TextBox("Nasa Images",
                             40.sp,
-                            Modifier.fillMaxWidth().height(80.dp),
+                            Modifier
+                                .fillMaxWidth()
+                                .height(80.dp),
                             Modifier.padding(top = 24.dp),)
                         SearchContainer()
                         if (searchable) {
@@ -82,7 +87,9 @@ class MainActivity : ComponentActivity() {
                         } else {
                             TextBox("Select date range and search!",
                                 24.sp,
-                                Modifier.fillMaxWidth().padding(top = 24.dp),
+                                Modifier
+                                    .fillMaxWidth()
+                                    .padding(top = 24.dp),
                                 )
                         }
                     }
@@ -205,7 +212,9 @@ class MainActivity : ComponentActivity() {
         if (response[0].title != "") {
             TextBox("Click image to view full size",
                 24.sp,
-                Modifier.fillMaxWidth().padding(top = 24.dp, bottom = 12.dp))
+                Modifier
+                    .fillMaxWidth()
+                    .padding(top = 24.dp, bottom = 12.dp))
             SortMenu()
             LazyColumn (
                 modifier = Modifier
@@ -222,7 +231,9 @@ class MainActivity : ComponentActivity() {
         } else if (response[0].error) {
             TextBox("Error Fetching Data",
                 24.sp,
-                Modifier.fillMaxWidth().padding(top = 24.dp))
+                Modifier
+                    .fillMaxWidth()
+                    .padding(top = 24.dp))
         } else {
             Column (
                 modifier = Modifier
@@ -245,6 +256,7 @@ class MainActivity : ComponentActivity() {
     fun LineItem (response: ResponseItem) {
         val uriHandler = LocalUriHandler.current
         var imageUrl = response.url
+        val startDialog = remember { mutableStateOf(false) }
 
         // Handles case where url leads to a youtube video
         if (response.url.contains("youtube")) {
@@ -256,9 +268,15 @@ class MainActivity : ComponentActivity() {
         val imageDetails = "Title: ${response.title}\n" +
                 "Date: ${response.date}"
 
+        when {
+            startDialog.value -> {
+                ImageDialog(startDialog, imageUrl, imageDetails)
+            }
+        }
+
         Row (
             modifier = Modifier.clickable {
-                uriHandler.openUri(response.url)
+                startDialog.value = true
             },
         ) {
             Image(
